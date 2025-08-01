@@ -4,7 +4,9 @@ public class FollowPlayerCamera : MonoBehaviour
 {
     public Transform player;
     public float smoothing = 5f;
-    Vector3 offset;
+    private Vector3 offset;
+    private float rotationSpeed = 3f;
+
     /// <summary>
     /// Sets the offset between the camera and the player 
     /// Camera will stay at the position while following the player
@@ -20,7 +22,18 @@ public class FollowPlayerCamera : MonoBehaviour
     /// </summary>
     void Update()
     {
+        //RotateCamera();
         Vector3 playerCameraPosition = player.position + offset;
         transform.position = Vector3.Lerp(transform.position, playerCameraPosition, smoothing * Time.deltaTime);
+        //transform.LookAt(player);
+    }
+
+    private void RotateCamera()
+    {
+        float mousePosition = Input.GetAxis("Mouse X");
+
+        transform.RotateAround(player.position, Vector3.up, mousePosition * rotationSpeed);
+
+        
     }
 }
