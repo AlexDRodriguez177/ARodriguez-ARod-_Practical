@@ -4,47 +4,31 @@ using UnityEngine.Rendering;
 public class PlayerMovment : MonoBehaviour
 {
     [SerializeField] private float speed = 8f;
-    private Vector3 movment;
-    private Rigidbody playersRb;
-    private int floorMask;
-    private float camRayLength = 100f;
+    [SerializeField] private float turnSpeed = 180f;
 
-    [SerializeField] private string playerHorizontalInput = "Horizontal";
-    [SerializeField] private string playerVerticalInput = "Vertical";
-    [SerializeField] private string floor = "Floor";
+    [SerializeField] private const string playerHorizontalInput = "Horizontal";
+    [SerializeField] private const string playerVerticalInput = "Vertical";
+    [SerializeField] private const string floor = "Floor";
+    [SerializeField] private const string cameraRotation = "Mouse X";
 
-    void Start()
+    void Update()
     {
-        playersRb = GetComponent<Rigidbody>();
-        floorMask = LayerMask.GetMask(floor);
+        CameraRotation();
+        PlayerMovement();
     }
 
+    void CameraRotation()
+    {
+        float mouseX = Input.GetAxis(cameraRotation);
+        transform.Rotate(Vector3.up, mouseX * turnSpeed * Time.deltaTime);
+    }
 
-    void FixedUpdate()
+    void PlayerMovement()
     {
         float horizontalInput = Input.GetAxis(playerHorizontalInput);
         float verticalInput = Input.GetAxis(playerVerticalInput);
-        MovingPlayer(horizontalInput, verticalInput);
-        TurningPlayer();
+        transform.position += (transform.forward * verticalInput + transform.right * horizontalInput) * speed * Time.deltaTime;
     }
 
-    public void MovingPlayer(float horizontalInput, float verticalInput)
-    {
-        movment.Set(horizontalInput, 0f, verticalInput);
-        movment = movment.normalized * speed * Time.deltaTime;
-        playersRb.MovePosition(transform.position + movment);
-    }
 
-    public void TurningPlayer()
-    {
-        Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit floorHit;
-        if(Physics.Raycast(camRay, out floorHit, camRayLength, floorMask))
-        {
-            Vector3 playerToMouse = floorHit.point - transform.position;
-            playerToMouse.y = 0f;
-            Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
-            playersRb.MoveRotation(newRotation);
-        }
-    }
 }

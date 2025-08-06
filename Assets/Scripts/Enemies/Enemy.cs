@@ -21,6 +21,11 @@ public class Enemy : MonoBehaviour
         
     }
 
+    public void AttackPlayer(PlayerHealth playerHealth)
+    {
+        playerHealth.PlayerTakeDamage(damage);
+    }
+
     public void TakeDamage(int amount)
     {
         if (!isDead)
@@ -29,6 +34,8 @@ public class Enemy : MonoBehaviour
             if (currenthealth <= 0)
             {
                 isDead = true;
+                ScoreManager.score += scoreValue;
+                ScoreManager.Instance.ShowScore();
                 Destroy(gameObject);
             }
         }
