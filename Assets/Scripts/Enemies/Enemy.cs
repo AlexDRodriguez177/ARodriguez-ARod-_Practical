@@ -15,11 +15,6 @@ public class Enemy : MonoBehaviour
         currenthealth = maxHealth;
     }
 
- 
-    void Update()
-    {
-        
-    }
 
     public void AttackPlayer(PlayerHealth playerHealth)
     {

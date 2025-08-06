@@ -1919,8 +1919,8 @@ MonoBehaviour:
   player: {fileID: 2350480832462528308}
   numberOfEnemiesmin: 1
   numberOfEnemiesmax: 5
-  spawnIntervalMin: 10
-  spawnIntervalMax: 20
+  spawnIntervalMin: 5
+  spawnIntervalMax: 10
 --- !u!4 &1344083690
 Transform:
   m_ObjectHideFlags: 0

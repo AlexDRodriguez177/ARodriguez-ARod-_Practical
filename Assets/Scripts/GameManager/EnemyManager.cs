@@ -19,12 +19,6 @@ public class EnemyManager : MonoBehaviour
         StartWave();
     }
 
-
-    void Update()
-    {
-
-    }
-
     private void StartWave()
     {
         int numEnemiesToSpawn = Random.Range(numberOfEnemiesmin, numberOfEnemiesmax);
